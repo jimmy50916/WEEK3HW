@@ -223,14 +223,14 @@ namespace _20210716_HW
 
         private void comfirmButton_Click(object sender, EventArgs e)
         {
-            decimal tax = YearTax();
+            decimal yeartax = GetYearTax();
             if (this.yearModeRadioButton.Checked)
             {
-                this.outputTextBox.Text = tax.ToString();
+                this.outputTextBox.Text = yeartax.ToString();
             } 
             else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked)
             {
-                this.outputTextBox.Text = Math.Truncate((tax * GetDuration()/365m)).ToString() + "        "+GetDuration().ToString();
+                this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
             }
         }
         private void yearModeRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -244,7 +244,7 @@ namespace _20210716_HW
             this.endDateTimePicker.Visible = true;
         }
         /// <summary> 計算當年度的稅額 </summary>
-        private Decimal YearTax()
+        private Decimal GetYearTax()
         {
             object obj = this.carTypeComboBox.SelectedItem;
             Hashtable temp = GetCarCCHashTable(obj);
@@ -254,19 +254,75 @@ namespace _20210716_HW
             else
                 return (Convert.ToDecimal(tax));
         }
-        private int GetDuration()
+        private Decimal GetDaysTax(decimal yearTax)
         {
-            if(this.startDateTimePicker.Value > endDateTimePicker.Value)
+            DateTime startdate = this.startDateTimePicker.Value;
+            DateTime enddate = this.endDateTimePicker.Value;
+            decimal daysTax;
+            if (startdate.Year != enddate.Year)
             {
-                return 0;
+                if (DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
+                {
+                    int[] tempArr = GetDuration();
+                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
+                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
+                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
+                    daysTax = yearTax * startYearDays / 366m + yearTax * endYearDays / 366m + yearTax * years;
+                    return Math.Truncate(daysTax);
+                }
+                else if (!DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
+                {
+                    int[] tempArr = GetDuration();
+                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
+                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
+                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
+                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 366m + yearTax * years;
+                    return Math.Truncate(daysTax);
+                }
+                else if (DateTime.IsLeapYear(startdate.Year) && !DateTime.IsLeapYear(enddate.Year))
+                {
+                    int[] tempArr = GetDuration();
+                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
+                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
+                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
+                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
+                    return Math.Truncate(daysTax);
+                }
+                else
+                {
+                    int[] tempArr = GetDuration();
+                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
+                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
+                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
+                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
+                    return Math.Truncate(daysTax);
+
+                }
             }
             else
             {
-                DateTime statdate   =  this.startDateTimePicker.Value;
-                DateTime enddate = this.endDateTimePicker.Value;
+                int[] tempArr = GetDuration();
 
-                return (Convert.ToInt32((enddate - statdate).TotalDays));
+                decimal temp = (DateTime.IsLeapYear(startdate.Year)) ? yearTax * tempArr[0]/366: yearTax * tempArr[0] / 365;
+                return Math.Truncate(temp);
             }
         }
+        private int[] GetDuration()
+        {           
+            if(this.startDateTimePicker.Value > endDateTimePicker.Value)
+            {
+                return new int[2]{0,0};
+            }
+            else
+            {
+                DateTime startdate   =  this.startDateTimePicker.Value;
+                DateTime enddate = this.endDateTimePicker.Value;
+
+                int days = (Convert.ToInt32((enddate - startdate).TotalDays))+1;
+                int years= (Convert.ToInt32((enddate.Year - startdate.Year)));
+                return new int[2] { days, years };
+            }
+        }
+
     }
 }
