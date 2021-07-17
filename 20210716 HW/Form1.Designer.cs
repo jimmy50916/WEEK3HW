@@ -1,7 +1,7 @@
 ﻿
 namespace _20210716_HW
 {
-    partial class Form1
+    partial class TaxCalculator
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -29,155 +29,184 @@ namespace _20210716_HW
         /// </summary>
         private void InitializeComponent()
         {
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.yearModeRadioButton = new System.Windows.Forms.RadioButton();
+            this.daysModeRadioButton2 = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.outputTextBox1 = new System.Windows.Forms.TextBox();
+            this.carTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.outputTextBox = new System.Windows.Forms.TextBox();
+            this.alertLabel = new System.Windows.Forms.Label();
+            this.CCLabel = new System.Windows.Forms.Label();
+            this.carTypeLabel = new System.Windows.Forms.Label();
+            this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.resetButton = new System.Windows.Forms.Button();
+            this.comfirmButton = new System.Windows.Forms.Button();
+            this.CCComboBox = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // radioButton1
+            // yearModeRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(126, 50);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 16);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.yearModeRadioButton.AutoSize = true;
+            this.yearModeRadioButton.Location = new System.Drawing.Point(126, 50);
+            this.yearModeRadioButton.Name = "yearModeRadioButton";
+            this.yearModeRadioButton.Size = new System.Drawing.Size(59, 16);
+            this.yearModeRadioButton.TabIndex = 0;
+            this.yearModeRadioButton.TabStop = true;
+            this.yearModeRadioButton.Text = "全年度";
+            this.yearModeRadioButton.UseVisualStyleBackColor = true;
+            this.yearModeRadioButton.CheckedChanged += new System.EventHandler(this.yearModeRadioButton_CheckedChanged);
             // 
-            // radioButton2
+            // daysModeRadioButton2
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(210, 50);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 16);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.daysModeRadioButton2.AutoSize = true;
+            this.daysModeRadioButton2.Location = new System.Drawing.Point(210, 50);
+            this.daysModeRadioButton2.Name = "daysModeRadioButton2";
+            this.daysModeRadioButton2.Size = new System.Drawing.Size(59, 16);
+            this.daysModeRadioButton2.TabIndex = 1;
+            this.daysModeRadioButton2.TabStop = true;
+            this.daysModeRadioButton2.Text = "依期間";
+            this.daysModeRadioButton2.UseVisualStyleBackColor = true;
+            this.daysModeRadioButton2.CheckedChanged += new System.EventHandler(this.daysModeRadioButton2_CheckedChanged);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.outputTextBox1);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.dateTimePicker2);
-            this.panel1.Controls.Add(this.dateTimePicker1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.comboBox2);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Controls.Add(this.radioButton1);
-            this.panel1.Location = new System.Drawing.Point(109, 38);
+            this.panel1.Controls.Add(this.alertLabel);
+            this.panel1.Controls.Add(this.carTypeComboBox);
+            this.panel1.Controls.Add(this.outputTextBox);
+            this.panel1.Controls.Add(this.CCLabel);
+            this.panel1.Controls.Add(this.carTypeLabel);
+            this.panel1.Controls.Add(this.endDateTimePicker);
+            this.panel1.Controls.Add(this.startDateTimePicker);
+            this.panel1.Controls.Add(this.resetButton);
+            this.panel1.Controls.Add(this.comfirmButton);
+            this.panel1.Controls.Add(this.CCComboBox);
+            this.panel1.Controls.Add(this.daysModeRadioButton2);
+            this.panel1.Controls.Add(this.yearModeRadioButton);
+            this.panel1.Location = new System.Drawing.Point(126, 43);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(553, 358);
             this.panel1.TabIndex = 2;
             // 
-            // comboBox2
+            // carTypeComboBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(126, 164);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(169, 20);
-            this.comboBox2.TabIndex = 3;
+            this.carTypeComboBox.FormattingEnabled = true;
+            this.carTypeComboBox.Items.AddRange(new object[] {
+            "自用小客車",
+            "營業用小客車",
+            "大客車",
+            "貨車",
+            "曳引車",
+            "機車",
+            "自用電動小客車",
+            "營業用電動小客車",
+            "電動機車",
+            "電動大客車及貨車"});
+            this.carTypeComboBox.Location = new System.Drawing.Point(126, 119);
+            this.carTypeComboBox.Name = "carTypeComboBox";
+            this.carTypeComboBox.Size = new System.Drawing.Size(169, 20);
+            this.carTypeComboBox.TabIndex = 12;
+            this.carTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.carTypeComboBox_SelectedIndexChanged);
             // 
-            // comboBox1
+            // outputTextBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(126, 114);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(169, 20);
-            this.comboBox1.TabIndex = 2;
+            this.outputTextBox.Location = new System.Drawing.Point(52, 263);
+            this.outputTextBox.Multiline = true;
+            this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.Size = new System.Drawing.Size(450, 73);
+            this.outputTextBox.TabIndex = 11;
             // 
-            // button1
+            // alertLabel
             // 
-            this.button1.Location = new System.Drawing.Point(182, 234);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.alertLabel.AutoSize = true;
+            this.alertLabel.ForeColor = System.Drawing.Color.Red;
+            this.alertLabel.Location = new System.Drawing.Point(358, 122);
+            this.alertLabel.Name = "alertLabel";
+            this.alertLabel.Size = new System.Drawing.Size(33, 12);
+            this.alertLabel.TabIndex = 9;
+            this.alertLabel.Text = "label3";
             // 
-            // button2
+            // CCLabel
             // 
-            this.button2.Location = new System.Drawing.Point(286, 234);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.CCLabel.AutoSize = true;
+            this.CCLabel.Location = new System.Drawing.Point(45, 163);
+            this.CCLabel.Name = "CCLabel";
+            this.CCLabel.Size = new System.Drawing.Size(75, 24);
+            this.CCLabel.TabIndex = 8;
+            this.CCLabel.Text = "車子CC數/\r\n馬力(HP、PS)";
             // 
-            // dateTimePicker1
+            // carTypeLabel
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(327, 24);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 5;
+            this.carTypeLabel.AutoSize = true;
+            this.carTypeLabel.Location = new System.Drawing.Point(61, 122);
+            this.carTypeLabel.Name = "carTypeLabel";
+            this.carTypeLabel.Size = new System.Drawing.Size(29, 12);
+            this.carTypeLabel.TabIndex = 7;
+            this.carTypeLabel.Text = "車種";
             // 
-            // dateTimePicker2
+            // endDateTimePicker
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(327, 61);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker2.TabIndex = 6;
+            this.endDateTimePicker.Location = new System.Drawing.Point(327, 61);
+            this.endDateTimePicker.Name = "endDateTimePicker";
+            this.endDateTimePicker.Size = new System.Drawing.Size(200, 22);
+            this.endDateTimePicker.TabIndex = 6;
             // 
-            // label1
+            // startDateTimePicker
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(87, 122);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(33, 12);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "label1";
+            this.startDateTimePicker.Location = new System.Drawing.Point(327, 24);
+            this.startDateTimePicker.Name = "startDateTimePicker";
+            this.startDateTimePicker.Size = new System.Drawing.Size(200, 22);
+            this.startDateTimePicker.TabIndex = 5;
             // 
-            // label2
+            // resetButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(87, 167);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 12);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "label2";
+            this.resetButton.Location = new System.Drawing.Point(286, 222);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(75, 23);
+            this.resetButton.TabIndex = 4;
+            this.resetButton.Text = "取消重填";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
-            // label3
+            // comfirmButton
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(358, 122);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 12);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "label3";
+            this.comfirmButton.Location = new System.Drawing.Point(186, 222);
+            this.comfirmButton.Name = "comfirmButton";
+            this.comfirmButton.Size = new System.Drawing.Size(75, 23);
+            this.comfirmButton.TabIndex = 3;
+            this.comfirmButton.Text = "確定送出";
+            this.comfirmButton.UseVisualStyleBackColor = true;
+            this.comfirmButton.Click += new System.EventHandler(this.comfirmButton_Click);
             // 
-            // outputTextBox1
+            // CCComboBox
             // 
-            this.outputTextBox1.Location = new System.Drawing.Point(59, 263);
-            this.outputTextBox1.Multiline = true;
-            this.outputTextBox1.Name = "outputTextBox1";
-            this.outputTextBox1.Size = new System.Drawing.Size(450, 73);
-            this.outputTextBox1.TabIndex = 10;
+            this.CCComboBox.FormattingEnabled = true;
+            this.CCComboBox.Items.AddRange(new object[] {
+            "<500cc",
+            "501cc - 600cc",
+            "601cc - 1200cc",
+            "1201cc - 1800cc",
+            "1801cc - 2400cc",
+            "2401cc - 3000cc",
+            "3001cc - 4200cc",
+            "4201cc - 5400cc",
+            "5401cc - 6600cc",
+            "6601cc - 7800cc",
+            "7801cc "});
+            this.CCComboBox.Location = new System.Drawing.Point(126, 167);
+            this.CCComboBox.Name = "CCComboBox";
+            this.CCComboBox.Size = new System.Drawing.Size(169, 20);
+            this.CCComboBox.TabIndex = 2;
             // 
-            // Form1
+            // TaxCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "TaxCalculator";
+            this.Text = "TaxCalculator";
+            this.Load += new System.EventHandler(this.TaxCalculatorForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -186,19 +215,19 @@ namespace _20210716_HW
 
         #endregion
 
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton yearModeRadioButton;
+        private System.Windows.Forms.RadioButton daysModeRadioButton2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox outputTextBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label alertLabel;
+        private System.Windows.Forms.Label CCLabel;
+        private System.Windows.Forms.Label carTypeLabel;
+        private System.Windows.Forms.DateTimePicker endDateTimePicker;
+        private System.Windows.Forms.DateTimePicker startDateTimePicker;
+        private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.Button comfirmButton;
+        private System.Windows.Forms.TextBox outputTextBox;
+        private System.Windows.Forms.ComboBox CCComboBox;
+        private System.Windows.Forms.ComboBox carTypeComboBox;
     }
 }
 

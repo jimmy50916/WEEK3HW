@@ -11,118 +11,247 @@ using System.Collections;
 
 namespace _20210716_HW
 {
-    public partial class Form1 : Form
+    public partial class TaxCalculator : Form
     {
-        Hashtable selfCarCC = new Hashtable()
+        Hashtable SelfCarCC = new Hashtable()
         {
-            {"<500cc" , 1620 },
-            {"501cc - 600cc"  , 2160    },
-            {"601cc - 1200cc" , 4320    },
-            {"1201cc - 1800cc", 7120    },
-            {"1801cc - 2400cc" ,11230   },
-            {"2401cc - 3000cc", 15210   },
-            {"3001cc - 4200cc" ,28220   },
-            {"4201cc - 5400cc" ,46170   },
-            {"5401cc - 6600cc" ,69690   },
-            {"6601cc - 7800cc" ,117000  },
-            {"7801cc ",   151200        },
+            {"01. <500cc" , 1620 },
+            {"02. 501cc - 600cc"  , 2160    },
+            {"03. 601cc - 1200cc" , 4320    },
+            {"04. 1201cc - 1800cc", 7120    },
+            {"05. 1801cc - 2400cc" ,11230   },
+            {"06. 2401cc - 3000cc", 15210   },
+            {"07. 3001cc - 4200cc" ,28220   },
+            {"08. 4201cc - 5400cc" ,46170   },
+            {"09. 5401cc - 6600cc" ,69690   },
+            {"10. 6601cc - 7800cc" ,117000  },
+            {"11. >7801cc ",   151200        },
         };
-        Hashtable businessCarCC = new Hashtable()
+        Hashtable BusinessCarCC = new Hashtable()
         {
-            {"<500cc",  900 },
-            {"501cc - 600cc",  1260},
-            {"601cc - 1200cc",  2160},
-            {"1201cc - 1800cc", 3060},
-            {"1801cc - 2400cc", 6480},
-            {"2401cc - 3000cc", 9900},
-            {"3001cc - 4200cc", 16380},
-            {"4201cc - 5400cc", 24300},
-            {"5401cc - 6600cc", 33660},
-            {"6601cc - 7800cc", 44460},
-            {">7801cc",   56700},
+            {"01. <500cc",  900 },
+            {"02. 501cc - 600cc",  1260},
+            {"03. 601cc - 1200cc",  2160},
+            {"04. 1201cc - 1800cc", 3060},
+            {"05. 1801cc - 2400cc", 6480},
+            {"06. 2401cc - 3000cc", 9900},
+            {"07. 3001cc - 4200cc", 16380},
+            {"08. 4201cc - 5400cc", 24300},
+            {"09. 5401cc - 6600cc", 33660},
+            {"10. 6601cc - 7800cc", 44460},
+            {"11. >7801cc",   56700},
+        };
+        Hashtable CoachCarCC = new Hashtable()
+        {
+            {"01. 501cc - 600cc",   1080},
+            {"02. 601cc - 1200cc",  1800},
+            {"03. 1201cc - 1800cc", 2700},
+            {"04. 1801cc - 2400cc", 3600},
+            {"05. 2401cc - 3000cc", 4500},
+            {"06. 3001cc~3600cc",   5400},
+            {"07. 3601cc~4200cc",   6300},
+            {"08. 4201cc~4800cc",   7200},
+            {"09. 4801cc~5400cc",   8100},
+            {"10. 5401cc~6000cc",   9000},
+            {"11. 6001cc~6600cc",   9900},
+            {"12. 6601cc~7200cc",   1080},
+            {"13. 7201cc~7800cc",   1170},
+            {"14. 7801cc~8400cc",   1260},
+            {"15. 8401cc~9000cc",   1350},
+            {"16. 9001cc~9600cc",   1440},
+            {"17. 9601cc~10200cc",  1530},
+            {"18. >10201cc",  16200     },
+        };
+        Hashtable TruckCC = new Hashtable()
+        {
+            {"01. <500cc",     900 },
+            {"02. 501cc - 600cc",   1080},
+            {"03. 601cc - 1200cc",  1800},
+            {"04. 1201cc - 1800cc", 2700},
+            {"05. 1801cc - 2400cc", 3600},
+            {"06. 2401cc - 3000cc", 4500},
+            {"07. 3001cc~3600cc",   5400},
+            {"08. 3601cc~4200cc",   6300},
+            {"09. 4201cc~4800cc",   7200},
+            {"10. 4801cc~5400cc",   8100},
+            {"11. 5401cc~6000cc",   9000},
+            {"12. 6001cc~6600cc",   9900},
+            {"13. 6601cc~7200cc",   10800},
+            {"14. 7201cc~7800cc",   11700},
+            {"15. 7801cc~8400cc",   12600},
+            {"16. 8401cc~9000cc",   13500},
+            {"17. 9001cc~9600cc",   14400},
+            {"18. 9601cc~10200cc",  15300},
+            {"19> 10201cc",   16200},
         };
 
-        Hashtable coachCarCC = new Hashtable()
+        Hashtable MotorcycleCC = new Hashtable()
         {
-            {"501cc - 600cc",   1080},
-            {"601cc - 1200cc",  1800},
-            {"1201cc - 1800cc", 2700},
-            {"1801cc - 2400cc", 3600},
-            {"2401cc - 3000cc", 4500},
-            {"3001cc~3600cc",   5400},
-            {"3601cc~4200cc",   6300},
-            {"4201cc~4800cc",   7200},
-            {"4801cc~5400cc",   8100},
-            {"5401cc~6000cc",   9000},
-            {"6001cc~6600cc",   9900},
-            {"6601cc~7200cc",   1080},
-            {"7201cc~7800cc",   1170},
-            {"7801cc~8400cc",   1260},
-            {"8401cc~9000cc",   1350},
-            {"9001cc~9600cc",   1440},
-            {"9601cc~10200cc",  1530},
-            {">10201cc",  16200     },
+            {"01. <150cc",    0},
+            {"02. 151cc~ 250cc",    800},
+            {"03. 251cc~ 500cc",    1620},
+            {"04. 501cc~ 600cc",    2160},
+            {"05. 601cc~1200cc",    4320},
+            {"06. 1201cc~1800cc",   7120},
+            {"07. >1801cc",   11230},
         };
-        Hashtable truckCC = new Hashtable()
+        Hashtable SelfElectCarHP = new Hashtable()
         {
-            {"<500cc",     900 },
-            {"501cc - 600cc",   1080},
-            {"601cc - 1200cc",  1800},
-            {"1201cc - 1800cc", 2700},
-            {"1801cc - 2400cc", 3600},
-            {"2401cc - 3000cc", 4500},
-            {"3001cc~3600cc",   5400},
-            {"3601cc~4200cc",   6300},
-            {"4201cc~4800cc",   7200},
-            {"4801cc~5400cc",   8100},
-            {"5401cc~6000cc",   9000},
-            {"6001cc~6600cc",   9900},
-            {"6601cc~7200cc",   10800},
-            {"7201cc~7800cc",   11700},
-            {"7801cc~8400cc",   12600},
-            {"8401cc~9000cc",   13500},
-            {"9001cc~9600cc",   14400},
-            {"9601cc~10200cc",  15300},
-            {">10201cc",   16200},
+            {"01. <38HP    <38.6PS",  1620},
+            {"02. 38.1-56HP 38.7-56.8PS",   2160},
+            {"03. 56.1-83HP 56.9-84.2PS",   4320},
+            {"04. 83.1-182HP    84.3-184.7PS",  7120},
+            {"05. 182.1-262HP   184.8-265.9PS", 11230},
+            {"06. 262.1-322HP   266.0-326.8PS", 15210},
+            {"07. 322.1-414HP   326.9-420.2PS", 28220},
+            {"08. 414.1-469HP   420.3-476.0PS", 46170},
+            {"09. 469.1-509HP   476.1-516.6PS", 69690},
+            {"10. >509.1HP >516.7PS",  117000},
         };
+        Hashtable BusinessElecCarHP = new Hashtable(0)
+        {
+            {"01. <38HP    <38.6PS",  900 },
+            {"02. 38.1-56HP 38.7-56.8PS",   1260},
+            {"03. 56.1-83HP 56.9-84.2PS",   2160},
+            {"04. 83.1-182HP    84.3-184.7PS",  3060},
+            {"05. 182.1-262HP   184.8-265.9PS", 6480},
+            {"06. 262.1-322HP   266.0-326.8PS", 9900},
+            {"07. 322.1-414HP   326.9-420.2PS", 16380},
+            {"08. 414.1-469HP   420.3-476.0PS", 24300},
+            {"09. 469.1-509HP   476.1-516.6PS", 33660},
+            {"10. >509.1HP >516.7PS", 44460 }
+        };
+        Hashtable ElecMotoHP = new Hashtable()
+        {
+            {"01. <20.19HP <21.54PS", 0},
+            {"02. 20.20-40.03HP 21.55-42.71PS", 800},
+            {"03. 40.04-50.07HP 42.72-53.43PS", 1620},
+            {"04. 50.08-58.79HP 53.44-62.73PS", 2160},
+            {"05. 58.80-114.11HP    62.74-121.76PS",    4320},
+            {"06. >114.12HP    >121.77PS",    7120},
+        };
+        Hashtable ElecCoachCarAndTruckHP = new Hashtable()
+        {
+            {"01. <138HP   <140.1PS", 4500 },
+            {"02. 138.1-200HP   140.2-203PS",   6300},
+            {"03. 200.1-247HP   203.1-250.7PS", 8100},
+            {"04. 247.1-286HP   250.8-290.3PS", 9900},
+            {"05. 286.1-336HP   290.4-341PS",   11700},
+            {"06. 336.1-361HP   341.1-366.4PS", 13500},
+            {"07. >361.1HP >366.5PS", 15300},
+        };
+        Dictionary<string, string> CarTypeDic = new Dictionary<string, string>()
+        {
+            {"自用小客車", "SelfCarCar "},
+            {"營業用小客車","BusinessCarC"},
+            {"大客車","CoachCarCC"},
+            {"貨車","TruckCC"},
+            {"曳引車","TruckCC"},
+            {"機車","MotorcycleCC"},
+            {"自用電動小客車","SelfElecCarHP"},
+            {"營業用電動小客車","BusinessElecCarHP"},
+            {"電動機車","ElecMotoHP"},
+            {"電動大客車及貨車","ElecCoachCarAndTruckHP"},
+        };
+        public TaxCalculator()
+        {
+            InitializeComponent();
+        }
+        private void TaxCalculatorForm_Load(object sender, EventArgs e)
+        {
+            Init();
+        }
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            Init();
+        }
+        ///<summary>將各個控制項初始化</summary>///
+        private void Init()
+        {
+            this.carTypeComboBox.SelectedItem = "自用小客車";
+            this.CCComboBox.SelectedIndex = 0;
+            this.alertLabel.Visible = false;
 
-        Hashtable motorcycleCC = new Hashtable()
+            this.outputTextBox.Text = "";
+        }
+        private Hashtable GetCarCCHashTable(object obj) 
         {
-            {"<150cc",    0},
-            {"151cc~ 250cc",    800},
-            {"251cc~ 500cc",    1620},
-            {"501cc~ 600cc",    2160},
-            {"601cc~1200cc",    4320},
-            {"1201cc~1800cc",   7120},
-            {">1801cc",   11230},
-        };
-        Hashtable electriclMotoHP = new Hashtable()
+            switch (obj.ToString())
+            {
+                case "自用小客車":
+                    return SelfCarCC;
+                case "營業用小客車":
+                    return BusinessCarCC;
+                case "大客車":
+                    return CoachCarCC;
+                case "貨車":
+                    return TruckCC;
+                case "曳引車":
+                    //稅額(HashTable Value)為貨車的130%，CC數範圍相同
+                    return TruckCC;
+                case "機車":
+                    return MotorcycleCC;
+                case "自用電動小客車":
+                    return SelfElectCarHP;
+                case "營業用電動小客車":
+                    return BusinessElecCarHP;
+                case "電動機車":
+                    return ElecMotoHP;
+                case "電動大客車及貨車":
+                    return BusinessElecCarHP;
+                default:
+                    return new Hashtable();
+            }
+        }
+        private void carTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            {"<20.19HP <21.54PS", 0},
-            {"20.20-40.03HP 21.55-42.71PS", 800},
-            {"40.04-50.07HP 42.72-53.43PS", 1620},
-            {"50.08-58.79HP 53.44-62.73PS", 2160},
-            {"58.80-114.11HP    62.74-121.76PS",    4320},
-            {">114.12HP    >121.77PS",    7120},
-        };
-        Hashtable electricalCoachCarHP = new Hashtable()
-        {
-            {"<138HP   <140.1PS", 4500 },
-            {"138.1-200HP   140.2-203PS",   6300},
-            {"200.1-247HP   203.1-250.7PS", 8100},
-            {"247.1-286HP   250.8-290.3PS", 9900},
-            {"286.1-336HP   290.4-341PS",   11700},
-            {"336.1-361HP   341.1-366.4PS", 13500},
-            {">361.1HP >366.5PS", 15300},
-        };
-    public Form1()
-    {
-        InitializeComponent();
-    }
+            this.CCComboBox.Items.Clear();
+            string a = this.CCComboBox.SelectedItem as string;
+            List<string> list = new List<string>();
+            foreach (string key in GetCarCCHashTable(this.carTypeComboBox.SelectedItem.ToString()).Keys) 
+            {
+                list.Add(key);
+            }
+            list.Sort();
+            foreach(string temp in list)
+            {
+                this.CCComboBox.Items.Add(temp);
+            }
+            this.CCComboBox.SelectedIndex = 0;
+        }
 
-    private void Form1_Load(object sender, EventArgs e)
-    {
+        private void comfirmButton_Click(object sender, EventArgs e)
+        {
+            YearTax();
+            if (this.yearModeRadioButton.Checked)
+            {
 
-    }
+            } 
+            else if (this.daysModeRadioButton2.Checked)
+            {
+
+            }
+        }
+
+        private void yearModeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            this.startDateTimePicker.Visible = false;
+            this.endDateTimePicker.Visible = false;
+        }
+
+        private void daysModeRadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            this.startDateTimePicker.Visible = false;
+            this.endDateTimePicker.Visible = false;
+        }
+
+        /// <summary> 計算當年度的稅額 </summary>
+        private int YearTax()
+        {
+            string str = this.carTypeComboBox.SelectedItem.ToString();
+            Hashtable temp = GetCarCCHashTable(str);
+
+
+        }
     }
 }
