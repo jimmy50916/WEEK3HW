@@ -90,6 +90,7 @@ namespace _20210716_HW
             // 
             // carTypeComboBox
             // 
+            this.carTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.carTypeComboBox.FormattingEnabled = true;
             this.carTypeComboBox.Items.AddRange(new object[] {
             "自用小客車",
@@ -113,6 +114,7 @@ namespace _20210716_HW
             this.outputTextBox.Location = new System.Drawing.Point(52, 263);
             this.outputTextBox.Multiline = true;
             this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.ReadOnly = true;
             this.outputTextBox.Size = new System.Drawing.Size(450, 73);
             this.outputTextBox.TabIndex = 11;
             // 
@@ -180,6 +182,7 @@ namespace _20210716_HW
             // 
             // CCComboBox
             // 
+            this.CCComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CCComboBox.FormattingEnabled = true;
             this.CCComboBox.Items.AddRange(new object[] {
             "<500cc",

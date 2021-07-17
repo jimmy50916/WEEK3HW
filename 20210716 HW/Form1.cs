@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
+using System.Runtime;
 
 namespace _20210716_HW
 {
@@ -172,7 +173,7 @@ namespace _20210716_HW
             this.CCComboBox.SelectedIndex = 0;
             this.alertLabel.Visible = false;
 
-            this.outputTextBox.Text = "";
+            this.outputTextBox.Text = string.Empty;
         }
         private Hashtable GetCarCCHashTable(object obj) 
         {
@@ -200,7 +201,7 @@ namespace _20210716_HW
                 case "電動大客車及貨車":
                     return BusinessElecCarHP;
                 default:
-                    return new Hashtable();
+                    return new Hashtable() { { "讀取失敗",-1} };
             }
         }
         private void carTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -222,36 +223,50 @@ namespace _20210716_HW
 
         private void comfirmButton_Click(object sender, EventArgs e)
         {
-            YearTax();
+            decimal tax = YearTax();
             if (this.yearModeRadioButton.Checked)
             {
-
+                this.outputTextBox.Text = tax.ToString();
             } 
-            else if (this.daysModeRadioButton2.Checked)
+            else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked)
             {
-
+                this.outputTextBox.Text = Math.Truncate((tax * GetDuration()/365m)).ToString() + "        "+GetDuration().ToString();
             }
         }
-
         private void yearModeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             this.startDateTimePicker.Visible = false;
             this.endDateTimePicker.Visible = false;
         }
-
         private void daysModeRadioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            this.startDateTimePicker.Visible = false;
-            this.endDateTimePicker.Visible = false;
+            this.startDateTimePicker.Visible = true;
+            this.endDateTimePicker.Visible = true;
         }
-
         /// <summary> 計算當年度的稅額 </summary>
-        private int YearTax()
+        private Decimal YearTax()
         {
-            string str = this.carTypeComboBox.SelectedItem.ToString();
-            Hashtable temp = GetCarCCHashTable(str);
+            object obj = this.carTypeComboBox.SelectedItem;
+            Hashtable temp = GetCarCCHashTable(obj);
+            object tax = temp[this.CCComboBox.SelectedItem.ToString()];
+            if (obj.ToString() == "曳引車")
+                return (Convert.ToDecimal(tax)*1.3m);
+            else
+                return (Convert.ToDecimal(tax));
+        }
+        private int GetDuration()
+        {
+            if(this.startDateTimePicker.Value > endDateTimePicker.Value)
+            {
+                return 0;
+            }
+            else
+            {
+                DateTime statdate   =  this.startDateTimePicker.Value;
+                DateTime enddate = this.endDateTimePicker.Value;
 
-
+                return (Convert.ToInt32((enddate - statdate).TotalDays));
+            }
         }
     }
 }
