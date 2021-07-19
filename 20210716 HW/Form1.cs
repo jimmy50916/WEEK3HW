@@ -156,7 +156,6 @@ namespace _20210716_HW
             {"電動大客車及貨車","ElecCoachCarAndTruckHP"},
         };
 
-
         public TaxCalculator()
         {
             InitializeComponent();
@@ -234,7 +233,7 @@ namespace _20210716_HW
                 {
                     this.CCComboBox.Items.Add(temp);
                 }
-                this.CCComboBox.SelectedIndex = 0;
+                this.CCComboBox.SelectedIndex = -1;
             }
         }
         private void CCComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -268,51 +267,8 @@ namespace _20210716_HW
                 return (Math.Truncate(Convert.ToDecimal(tax)*1.3m));
             else
                 return (Convert.ToDecimal(tax));
-        }
-        /// <summary> 回傳依期間模式(daysmode)下，Combobox選取車種的牌照稅(起始年分天數的牌照稅+中間經過幾年*每年牌照稅+結束年分天數的牌照稅)  </summary>
-        private Decimal GetDaysTax(decimal yearTax)
-        {
-            DateTime startdate = this.startDateTimePicker.Value;
-            DateTime enddate = this.endDateTimePicker.Value;
-            decimal daysTax;
-            //開始、結束不同年分
-            if (startdate.Year != enddate.Year)
-            {
-                int[] tempArr = GetDuration();
-                decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
-                decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
-                decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
-                //考慮起始年分、結束年分分別是否為閏年的4種情況
-                if (DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
-                {
-                    daysTax = yearTax * startYearDays / 366m + yearTax * endYearDays / 366m + yearTax * years;
-                    return Math.Truncate(daysTax);
-                }
-                else if (!DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
-                {
-                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 366m + yearTax * years;
-                    return Math.Truncate(daysTax);
-                }
-                else if (DateTime.IsLeapYear(startdate.Year) && !DateTime.IsLeapYear(enddate.Year))
-                {
-                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
-                    return Math.Truncate(daysTax);
-                }
-                else
-                {
-                    daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
-                    return Math.Truncate(daysTax);
-                }
-            }
-            //開始、結束同年
-            else
-            {
-                int[] tempArr = GetDuration();
-                decimal temp = (DateTime.IsLeapYear(startdate.Year)) ? yearTax * tempArr[0]/366: yearTax * tempArr[0] / 365;
-                return Math.Truncate(temp);
-            }
-        }
-        ///<summary>取得開始日期~結束日期的天數與中間經過幾個完整年，若結束天數小於起始天數回傳0。(考慮種樹問題，ex:2021/01/01 ~ 2021/01/01 也算一天)</summary>///
+        }     
+        ///<summary>取得開始日期~結束日期的天數與中間經過完整幾年，若結束天數小於起始天數回傳0。(考慮種樹問題，ex:2021/01/01 ~ 2021/01/01 也算一天)</summary>///
         private int[] GetDuration()
         {           
             if(this.startDateTimePicker.Value > endDateTimePicker.Value)
@@ -325,20 +281,23 @@ namespace _20210716_HW
                 DateTime enddate = this.endDateTimePicker.Value;
 
                 int days = (Convert.ToInt32((enddate - startdate).TotalDays))+1;
-                int years= (Convert.ToInt32((enddate.Year - startdate.Year)));
+                int years= (Convert.ToInt32((enddate.Year - startdate.Year)>0
+                    ?(enddate.Year - startdate.Year-1)
+                    :0));
                 return new int[2] { days, years };
             }
         }
         /// <summary>顯示輸出結果與使用者錯誤提示 </summary>
         private void ShowResultText()
         {
-            //
+            //錯誤警示:未選擇車種
             if (this.carTypeComboBox.SelectedItem == null)
             {
                 this.outputTextBox.Text = "發生錯誤";
                 this.alertLabel.Visible = true;
                 this.alertLabel.Text = "請選擇車種並重新送出!!";
             }
+            //錯誤警示:未選擇CC數
             else if (this.CCComboBox.SelectedItem == null)
             {
                 this.outputTextBox.Text = "發生錯誤";
@@ -361,12 +320,43 @@ namespace _20210716_HW
                 else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
                 {
                     this.alertLabel.Visible = false;
+                    DateTime startDate = this.startDateTimePicker.Value;
+                    DateTime endDate = this.endDateTimePicker.Value;
+                    int[] Arr = GetDuration();
+                    string temp;
+                    decimal startProportion = DateTime.IsLeapYear(startDate.Year)
+                        ? yeartax / 366m 
+                        : yeartax / 355m;
+                    decimal endProportion =  DateTime.IsLeapYear(endDate.Year)
+                        ? yeartax / 366m
+                        : yeartax / 355m;
+                    // +1是因為考慮種樹問題，2021/01/01 ~ 2021/01/01 也算一天!!
+                    int startYearDays = ((new DateTime(startDate.Year, 12, 31)) - startDate).Days +1;
+                    int endYearDays = (endDate-(new DateTime(startDate.Year, 1, 1))).Days +1;
+                    decimal crossYearsDaysTax = startYearDays * startProportion + Arr[1] * +endYearDays * endProportion;
+                    crossYearsDaysTax = (startDate.Year == endDate.Year)
+                        ? Math.Truncate((Arr[0] * startProportion))
+                        : Math.Truncate(crossYearsDaysTax);
+                    //判斷開始結束是否同一年
+                    if (startDate.Year == endDate.Year)
+                    {
+                        temp = $"{Arr[0]} 天 * {startProportion} (元/每日) = { Math.Truncate((Arr[0] * startProportion))} 元";
+                    }
+                    else {
+                        //起始日期當年天數*比例 + 中間經過幾年*年稅 + 結束日期當年天數*比例 = 應付稅額
+                        temp = $"{startYearDays} 天 * {startProportion}(元/每日) + " +
+                            $"{Arr[1]} 年 * {yeartax}" +
+                            $"{endYearDays} 天 * {endProportion}(元/每日) + " +
+                            $" = {crossYearsDaysTax}"
+                            ;
+                    }
                     this.outputTextBox.Text =
                         $"車種 : {this.carTypeComboBox.SelectedItem.ToString()}" + Environment.NewLine
                         + $"CC數/馬力 : {CCComboBox.SelectedItem.ToString()}" + Environment.NewLine
-                        + $"期間:  " + Environment.NewLine
-                        + $"計算金額 :" + Environment.NewLine
-                        + $"應繳牌照稅總額 : {GetDaysTax(yeartax).ToString()} NT$";
+                        + $"期間: {this.startDateTimePicker.Value.ToString("yyyy/MM/dd")} ~  {this.endDateTimePicker.Value.ToString("yyyy/MM/dd")}" + Environment.NewLine
+                        + $"總天數 : 共{Arr[0]}天，經過完整{Arr[1]}年"+Environment.NewLine
+                        + $"金額計算 : {temp}" + Environment.NewLine
+                        + $"應繳牌照稅總額 : {crossYearsDaysTax} NT$";
                 }
                 //錯誤警示:依期間模式未選取開始時間
                 else if (this.daysModeRadioButton2.Checked && (!this.startDateTimePicker.Checked))
@@ -382,7 +372,7 @@ namespace _20210716_HW
                     this.alertLabel.Visible = true;
                     this.alertLabel.Text = "請點選結束日期並重新送出!!";
                 }
-                //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
+                //錯誤警示:結束時間小於開始時間
                 else if (GetDuration()[0] == 0)
                 {
                     this.outputTextBox.Text = "發生錯誤";
@@ -398,7 +388,5 @@ namespace _20210716_HW
                 }
             }
         }
-
-
     }
 }

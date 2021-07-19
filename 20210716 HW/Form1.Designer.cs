@@ -45,6 +45,7 @@ namespace _20210716_HW
             this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.resetButton = new System.Windows.Forms.Button();
             this.comfirmButton = new System.Windows.Forms.Button();
+            this.NoteLabel = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             this.optionPanel.SuspendLayout();
             this.alertPanel.SuspendLayout();
@@ -92,7 +93,7 @@ namespace _20210716_HW
             this.mainPanel.ForeColor = System.Drawing.SystemColors.MenuText;
             this.mainPanel.Location = new System.Drawing.Point(12, 12);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(553, 358);
+            this.mainPanel.Size = new System.Drawing.Size(553, 387);
             this.mainPanel.TabIndex = 2;
             // 
             // optionPanel
@@ -221,7 +222,7 @@ namespace _20210716_HW
             this.outputTextBox.Multiline = true;
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.ReadOnly = true;
-            this.outputTextBox.Size = new System.Drawing.Size(547, 92);
+            this.outputTextBox.Size = new System.Drawing.Size(547, 121);
             this.outputTextBox.TabIndex = 11;
             // 
             // endDateTimePicker
@@ -262,12 +263,23 @@ namespace _20210716_HW
             this.comfirmButton.UseVisualStyleBackColor = true;
             this.comfirmButton.Click += new System.EventHandler(this.comfirmButton_Click);
             // 
+            // NoteLabel
+            // 
+            this.NoteLabel.AutoSize = true;
+            this.NoteLabel.Location = new System.Drawing.Point(10, 402);
+            this.NoteLabel.Name = "NoteLabel";
+            this.NoteLabel.Size = new System.Drawing.Size(561, 36);
+            this.NoteLabel.TabIndex = 3;
+            this.NoteLabel.Text = " * 跨年度計算公式說明:\r\n(起始年天數)*(當年平均每日牌照稅)+(中間經過完整年分應繳牌照稅)+(結束年天數)*(當年平均每日牌照稅)\r\n * 若當年度為閏" +
+    "年則以366天計算每日平均應繳牌照稅\r\n";
+            // 
             // TaxCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(584, 381);
+            this.ClientSize = new System.Drawing.Size(584, 461);
+            this.Controls.Add(this.NoteLabel);
             this.Controls.Add(this.mainPanel);
             this.Name = "TaxCalculator";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -280,6 +292,7 @@ namespace _20210716_HW
             this.alertPanel.ResumeLayout(false);
             this.alertPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -301,6 +314,7 @@ namespace _20210716_HW
         private System.Windows.Forms.Label titleLabel1;
         private System.Windows.Forms.Panel optionPanel;
         private System.Windows.Forms.Panel alertPanel;
+        private System.Windows.Forms.Label NoteLabel;
     }
 }
 
