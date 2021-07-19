@@ -32,9 +32,9 @@ namespace _20210716_HW
             this.yearModeRadioButton = new System.Windows.Forms.RadioButton();
             this.daysModeRadioButton2 = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.alertLabel = new System.Windows.Forms.Label();
             this.carTypeComboBox = new System.Windows.Forms.ComboBox();
             this.outputTextBox = new System.Windows.Forms.TextBox();
-            this.alertLabel = new System.Windows.Forms.Label();
             this.CCLabel = new System.Windows.Forms.Label();
             this.carTypeLabel = new System.Windows.Forms.Label();
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -83,10 +83,20 @@ namespace _20210716_HW
             this.panel1.Controls.Add(this.CCComboBox);
             this.panel1.Controls.Add(this.daysModeRadioButton2);
             this.panel1.Controls.Add(this.yearModeRadioButton);
-            this.panel1.Location = new System.Drawing.Point(126, 43);
+            this.panel1.Location = new System.Drawing.Point(71, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(553, 358);
             this.panel1.TabIndex = 2;
+            // 
+            // alertLabel
+            // 
+            this.alertLabel.AutoSize = true;
+            this.alertLabel.ForeColor = System.Drawing.Color.Red;
+            this.alertLabel.Location = new System.Drawing.Point(358, 122);
+            this.alertLabel.Name = "alertLabel";
+            this.alertLabel.Size = new System.Drawing.Size(33, 12);
+            this.alertLabel.TabIndex = 9;
+            this.alertLabel.Text = "label3";
             // 
             // carTypeComboBox
             // 
@@ -117,16 +127,6 @@ namespace _20210716_HW
             this.outputTextBox.ReadOnly = true;
             this.outputTextBox.Size = new System.Drawing.Size(450, 73);
             this.outputTextBox.TabIndex = 11;
-            // 
-            // alertLabel
-            // 
-            this.alertLabel.AutoSize = true;
-            this.alertLabel.ForeColor = System.Drawing.Color.Red;
-            this.alertLabel.Location = new System.Drawing.Point(358, 122);
-            this.alertLabel.Name = "alertLabel";
-            this.alertLabel.Size = new System.Drawing.Size(33, 12);
-            this.alertLabel.TabIndex = 9;
-            this.alertLabel.Text = "label3";
             // 
             // CCLabel
             // 
@@ -208,6 +208,7 @@ namespace _20210716_HW
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
             this.Name = "TaxCalculator";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "TaxCalculator";
             this.Load += new System.EventHandler(this.TaxCalculatorForm_Load);
             this.panel1.ResumeLayout(false);

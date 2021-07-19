@@ -14,6 +14,7 @@ namespace _20210716_HW
 {
     public partial class TaxCalculator : Form
     {
+        /// <summary> 自用小客車各個CC數區間對應牌照稅的Hashtable  </summary>
         Hashtable SelfCarCC = new Hashtable()
         {
             {"01. <500cc" , 1620 },
@@ -28,6 +29,7 @@ namespace _20210716_HW
             {"10. 6601cc - 7800cc" ,117000  },
             {"11. >7801cc ",   151200        },
         };
+        /// <summary> 商用小客車各個CC數區間對應牌照稅的Hashtable  </summary>
         Hashtable BusinessCarCC = new Hashtable()
         {
             {"01. <500cc",  900 },
@@ -42,6 +44,7 @@ namespace _20210716_HW
             {"10. 6601cc - 7800cc", 44460},
             {"11. >7801cc",   56700},
         };
+        /// <summary> 大客車各個CC數區間對應牌照稅的Hashtable  </summary>
         Hashtable CoachCarCC = new Hashtable()
         {
             {"01. 501cc - 600cc",   1080},
@@ -63,6 +66,7 @@ namespace _20210716_HW
             {"17. 9601cc~10200cc",  1530},
             {"18. >10201cc",  16200     },
         };
+        /// <summary> 貨車各個CC數區間對應牌照稅的Hashtable  </summary>
         Hashtable TruckCC = new Hashtable()
         {
             {"01. <500cc",     900 },
@@ -85,7 +89,7 @@ namespace _20210716_HW
             {"18. 9601cc~10200cc",  15300},
             {"19> 10201cc",   16200},
         };
-
+        /// <summary> 機車各個CC數區間對應牌照稅的Hashtable  </summary>
         Hashtable MotorcycleCC = new Hashtable()
         {
             {"01. <150cc",    0},
@@ -96,6 +100,7 @@ namespace _20210716_HW
             {"06. 1201cc~1800cc",   7120},
             {"07. >1801cc",   11230},
         };
+        /// <summary> 自用電動小客車各個馬力區間對應牌照稅的Hashtable  </summary>
         Hashtable SelfElectCarHP = new Hashtable()
         {
             {"01. <38HP    <38.6PS",  1620},
@@ -109,6 +114,7 @@ namespace _20210716_HW
             {"09. 469.1-509HP   476.1-516.6PS", 69690},
             {"10. >509.1HP >516.7PS",  117000},
         };
+        /// <summary> 商用電動小客車各個馬力區間對應牌照稅的Hashtable  </summary>
         Hashtable BusinessElecCarHP = new Hashtable(0)
         {
             {"01. <38HP    <38.6PS",  900 },
@@ -122,6 +128,7 @@ namespace _20210716_HW
             {"09. 469.1-509HP   476.1-516.6PS", 33660},
             {"10. >509.1HP >516.7PS", 44460 }
         };
+        /// <summary> 電動機車各個馬力區間對應牌照稅的Hashtable  </summary>
         Hashtable ElecMotoHP = new Hashtable()
         {
             {"01. <20.19HP <21.54PS", 0},
@@ -131,6 +138,7 @@ namespace _20210716_HW
             {"05. 58.80-114.11HP    62.74-121.76PS",    4320},
             {"06. >114.12HP    >121.77PS",    7120},
         };
+        /// <summary> 自用電動大客車各個馬力區間對應牌照稅的Hashtable  </summary>
         Hashtable ElecCoachCarAndTruckHP = new Hashtable()
         {
             {"01. <138HP   <140.1PS", 4500 },
@@ -141,6 +149,7 @@ namespace _20210716_HW
             {"06. 336.1-361HP   341.1-366.4PS", 13500},
             {"07. >361.1HP >366.5PS", 15300},
         };
+        /// <summary> 各個車種與其對應Hashtable名的Dictionary  </summary>
         Dictionary<string, string> CarTypeDic = new Dictionary<string, string>()
         {
             {"自用小客車", "SelfCarCar "},
@@ -175,6 +184,7 @@ namespace _20210716_HW
 
             this.outputTextBox.Text = string.Empty;
         }
+        /// <summary> 輸入車種傳回對應Hashtable </summary>
         private Hashtable GetCarCCHashTable(object obj) 
         {
             switch (obj.ToString())
@@ -243,7 +253,7 @@ namespace _20210716_HW
             this.startDateTimePicker.Visible = true;
             this.endDateTimePicker.Visible = true;
         }
-        /// <summary> 計算當年度的稅額 </summary>
+        /// <summary> 回傳全年模式(yearmode)下，Combobox選取車種的牌照稅 </summary>
         private Decimal GetYearTax()
         {
             object obj = this.carTypeComboBox.SelectedItem;
@@ -254,6 +264,7 @@ namespace _20210716_HW
             else
                 return (Convert.ToDecimal(tax));
         }
+        /// <summary> 回傳依期間模式(daysmode)下，Combobox選取車種的牌照稅(起始年分天數的牌照稅+中間經過幾年*每年牌照稅+結束年分天數的牌照稅)  </summary>
         private Decimal GetDaysTax(decimal yearTax)
         {
             DateTime startdate = this.startDateTimePicker.Value;
@@ -307,6 +318,7 @@ namespace _20210716_HW
                 return Math.Truncate(temp);
             }
         }
+        ///<summary>取得開始日期~結束日期的天數與中間經過幾個完整年(考慮種樹問題，ex 2021/01/01 ~ 2021/01/01  也算一天)</summary>///
         private int[] GetDuration()
         {           
             if(this.startDateTimePicker.Value > endDateTimePicker.Value)
