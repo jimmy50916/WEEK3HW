@@ -173,6 +173,7 @@ namespace _20210716_HW
         private void TaxCalculatorForm_Load(object sender, EventArgs e)
         {
             Init();
+            this.yearModeRadioButton.Checked = true;
         }
         private void resetButton_Click(object sender, EventArgs e)
         {
@@ -340,13 +341,6 @@ namespace _20210716_HW
             {
                 this.alertLabel.Visible = false ;
                 this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
-            }
-            //錯誤警示:未選取正確的模式
-            else if (!this.yearModeRadioButton.Checked && !this.daysModeRadioButton2.Checked)
-            {
-                this.outputTextBox.Text = "發生錯誤";
-                this.alertLabel.Visible = true;
-                this.alertLabel.Text = "請選擇全年度或是依期間，\n並重新送出!!";
             }
             //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
             else if(GetDuration()[0] == 0)
