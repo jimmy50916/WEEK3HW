@@ -259,6 +259,7 @@ namespace _20210716_HW
             object obj = this.carTypeComboBox.SelectedItem;
             Hashtable temp = GetCarCCHashTable(obj);
             object tax = temp[this.CCComboBox.SelectedItem.ToString()];
+            //曳引車牌照稅依貨車加收30%
             if (obj.ToString() == "曳引車")
                 return (Convert.ToDecimal(tax)*1.3m);
             else
@@ -270,55 +271,44 @@ namespace _20210716_HW
             DateTime startdate = this.startDateTimePicker.Value;
             DateTime enddate = this.endDateTimePicker.Value;
             decimal daysTax;
+            //開始、結束不同年分
             if (startdate.Year != enddate.Year)
             {
+                int[] tempArr = GetDuration();
+                decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
+                decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
+                decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
+                //考慮起始年分、結束年分分別是否為閏年的4種情況
                 if (DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
                 {
-                    int[] tempArr = GetDuration();
-                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
-                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
-                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
                     daysTax = yearTax * startYearDays / 366m + yearTax * endYearDays / 366m + yearTax * years;
                     return Math.Truncate(daysTax);
                 }
                 else if (!DateTime.IsLeapYear(startdate.Year) && DateTime.IsLeapYear(enddate.Year))
                 {
-                    int[] tempArr = GetDuration();
-                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
-                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
-                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
                     daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 366m + yearTax * years;
                     return Math.Truncate(daysTax);
                 }
                 else if (DateTime.IsLeapYear(startdate.Year) && !DateTime.IsLeapYear(enddate.Year))
                 {
-                    int[] tempArr = GetDuration();
-                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
-                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
-                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
                     daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
                     return Math.Truncate(daysTax);
                 }
                 else
                 {
-                    int[] tempArr = GetDuration();
-                    decimal startYearDays = Convert.ToDecimal((new DateTime(startdate.Year, 12, 31) - startdate).TotalDays) + 1;
-                    decimal endYearDays = Convert.ToDecimal((enddate - (new DateTime(enddate.Year, 1, 1))).TotalDays) + 1;
-                    decimal years = (tempArr[1] - 1) > 0 ? (tempArr[1] - 1) : 0;
                     daysTax = yearTax * startYearDays / 365m + yearTax * endYearDays / 365m + yearTax * years;
                     return Math.Truncate(daysTax);
-
                 }
             }
+            //開始、結束同年
             else
             {
                 int[] tempArr = GetDuration();
-
                 decimal temp = (DateTime.IsLeapYear(startdate.Year)) ? yearTax * tempArr[0]/366: yearTax * tempArr[0] / 365;
                 return Math.Truncate(temp);
             }
         }
-        ///<summary>取得開始日期~結束日期的天數與中間經過幾個完整年(考慮種樹問題，ex 2021/01/01 ~ 2021/01/01  也算一天)</summary>///
+        ///<summary>取得開始日期~結束日期的天數與中間經過幾個完整年，若結束天數小於起始天數回傳0。(考慮種樹問題，ex:2021/01/01 ~ 2021/01/01 也算一天)</summary>///
         private int[] GetDuration()
         {           
             if(this.startDateTimePicker.Value > endDateTimePicker.Value)
