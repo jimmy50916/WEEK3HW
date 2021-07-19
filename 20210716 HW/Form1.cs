@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
-using System.Runtime;
-
 namespace _20210716_HW
 {
     public partial class TaxCalculator : Form
@@ -191,8 +183,8 @@ namespace _20210716_HW
                 this.endDateTimePicker.Visible = false;
             }
             this.outputTextBox.Text = string.Empty;
-            this.startDateTimePicker.Value = DateTime.Now;
-            this.endDateTimePicker.Value = DateTime.Now;
+            this.startDateTimePicker.Checked = false;
+            this.endDateTimePicker.Checked = false;
         }
         /// <summary> 輸入車種傳回對應Hashtable </summary>
         private Hashtable GetCarCCHashTable(object obj) 
@@ -343,6 +335,18 @@ namespace _20210716_HW
                 this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
             }
             //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
+            else if (this.daysModeRadioButton2.Checked && (!this.startDateTimePicker.Checked ))
+            {
+                this.outputTextBox.Text = "發生錯誤";
+                this.alertLabel.Visible = true;
+                this.alertLabel.Text = "請點選起始日期並重新送出!!";
+            }
+            else if (this.daysModeRadioButton2.Checked && (!this.endDateTimePicker.Checked))
+            {
+                this.outputTextBox.Text = "發生錯誤";
+                this.alertLabel.Visible = true;
+                this.alertLabel.Text = "請點選結束日期並重新送出!!";
+            }
             else if(GetDuration()[0] == 0)
             {
                 this.outputTextBox.Text = "發生錯誤";
