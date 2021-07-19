@@ -149,7 +149,7 @@ namespace _20210716_HW
             {"06. 336.1-361HP   341.1-366.4PS", 13500},
             {"07. >361.1HP >366.5PS", 15300},
         };
-        /// <summary> 各個車種與其對應Hashtable名的Dictionary  </summary>
+        /// <summary> 各個車種中文名與其對應使用Hashtable名的Dictionary  </summary>
         Dictionary<string, string> CarTypeDic = new Dictionary<string, string>()
         {
             {"自用小客車", "SelfCarCar "},
@@ -163,10 +163,13 @@ namespace _20210716_HW
             {"電動機車","ElecMotoHP"},
             {"電動大客車及貨車","ElecCoachCarAndTruckHP"},
         };
+
+
         public TaxCalculator()
         {
             InitializeComponent();
         }
+        ///<summary>將各個控制項初始化</summary>///
         private void TaxCalculatorForm_Load(object sender, EventArgs e)
         {
             Init();
@@ -181,7 +184,11 @@ namespace _20210716_HW
             this.carTypeComboBox.SelectedItem = "自用小客車";
             this.CCComboBox.SelectedIndex = 0;
             this.alertLabel.Visible = false;
-
+            if (!this.daysModeRadioButton2.Checked)
+            {
+                this.startDateTimePicker.Visible = false;
+                this.endDateTimePicker.Visible = false;
+            }
             this.outputTextBox.Text = string.Empty;
         }
         /// <summary> 輸入車種傳回對應Hashtable </summary>
@@ -253,7 +260,7 @@ namespace _20210716_HW
             this.startDateTimePicker.Visible = true;
             this.endDateTimePicker.Visible = true;
         }
-        /// <summary> 回傳全年模式(yearmode)下，Combobox選取車種的牌照稅 </summary>
+        /// <summary> 回傳全年度模式(yearmode)下，Combobox選取車種的牌照稅 </summary>
         private Decimal GetYearTax()
         {
             object obj = this.carTypeComboBox.SelectedItem;
