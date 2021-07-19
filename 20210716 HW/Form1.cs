@@ -190,6 +190,8 @@ namespace _20210716_HW
                 this.endDateTimePicker.Visible = false;
             }
             this.outputTextBox.Text = string.Empty;
+            this.startDateTimePicker.Value = DateTime.Now;
+            this.endDateTimePicker.Value = DateTime.Now;
         }
         /// <summary> 輸入車種傳回對應Hashtable </summary>
         private Hashtable GetCarCCHashTable(object obj) 
@@ -240,23 +242,17 @@ namespace _20210716_HW
 
         private void comfirmButton_Click(object sender, EventArgs e)
         {
-            decimal yeartax = GetYearTax();
-            if (this.yearModeRadioButton.Checked)
-            {
-                this.outputTextBox.Text = yeartax.ToString();
-            } 
-            else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked)
-            {
-                this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
-            }
+            ShowResultText();
         }
         private void yearModeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
+            this.outputTextBox.Text = string.Empty;
             this.startDateTimePicker.Visible = false;
             this.endDateTimePicker.Visible = false;
         }
         private void daysModeRadioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            this.outputTextBox.Text = string.Empty;
             this.startDateTimePicker.Visible = true;
             this.endDateTimePicker.Visible = true;
         }
@@ -332,6 +328,39 @@ namespace _20210716_HW
                 return new int[2] { days, years };
             }
         }
-
+        private void ShowResultText()
+        {
+            decimal yeartax = GetYearTax();
+            if (this.yearModeRadioButton.Checked)
+            {
+                this.alertLabel.Visible = false;
+                this.outputTextBox.Text = yeartax.ToString();
+            } 
+            else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
+            {
+                this.alertLabel.Visible = false ;
+                this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
+            }
+            //錯誤警示:未選取正確的模式
+            else if (!this.yearModeRadioButton.Checked && !this.daysModeRadioButton2.Checked)
+            {
+                this.outputTextBox.Text = "發生錯誤";
+                this.alertLabel.Visible = true;
+                this.alertLabel.Text = "請選擇全年度或是依期間，\n並重新送出!!";
+            }
+            //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
+            else if(GetDuration()[0] == 0)
+            {
+                this.outputTextBox.Text = "發生錯誤";
+                this.alertLabel.Visible = true;
+                this.alertLabel.Text = "起始日期大於結束日期!!\n請選擇正確的起始日期與結束日期，\n並重新送出!!";
+            }
+            else
+            {
+                this.outputTextBox.Text = "發生錯誤";
+                this.alertLabel.Visible = true;
+                this.alertLabel.Text = "發生未知錯誤，請聯繫相關人員!!";
+            }
+        }
     }
 }
