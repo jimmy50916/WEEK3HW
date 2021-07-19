@@ -268,10 +268,10 @@ namespace _20210716_HW
             this.NoteLabel.AutoSize = true;
             this.NoteLabel.Location = new System.Drawing.Point(10, 402);
             this.NoteLabel.Name = "NoteLabel";
-            this.NoteLabel.Size = new System.Drawing.Size(561, 36);
+            this.NoteLabel.Size = new System.Drawing.Size(561, 48);
             this.NoteLabel.TabIndex = 3;
             this.NoteLabel.Text = " * 跨年度計算公式說明:\r\n(起始年天數)*(當年平均每日牌照稅)+(中間經過完整年分應繳牌照稅)+(結束年天數)*(當年平均每日牌照稅)\r\n * 若當年度為閏" +
-    "年則以366天計算每日平均應繳牌照稅\r\n";
+    "年則以366天計算每日平均應繳牌照稅\r\n * 計算結果若有小數將無條件捨去\r\n";
             // 
             // TaxCalculator
             // 

@@ -280,10 +280,10 @@ namespace _20210716_HW
                 DateTime startdate   =  this.startDateTimePicker.Value;
                 DateTime enddate = this.endDateTimePicker.Value;
 
-                int days = (Convert.ToInt32((enddate - startdate).TotalDays))+1;
-                int years= (Convert.ToInt32((enddate.Year - startdate.Year)>0
-                    ?(enddate.Year - startdate.Year-1)
-                    :0));
+                int days = (enddate - startdate).Days + 1 ;
+                int years= (enddate.Year - startdate.Year)>0
+                    ?(enddate.Year - startdate.Year - 1)
+                    :0;
                 return new int[2] { days, years };
             }
         }
@@ -320,20 +320,21 @@ namespace _20210716_HW
                 else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
                 {
                     this.alertLabel.Visible = false;
-                    DateTime startDate = this.startDateTimePicker.Value;
-                    DateTime endDate = this.endDateTimePicker.Value;
+                    //注意!! 若直接取this.startDateTimePicker.Value其實會包含時分秒，造成兩個DateTime 之間的Days屬性產生誤差
+                    DateTime startDate = (this.startDateTimePicker.Value).Date;
+                    DateTime endDate = (this.endDateTimePicker.Value).Date;
                     int[] Arr = GetDuration();
                     string temp;
                     decimal startProportion = DateTime.IsLeapYear(startDate.Year)
                         ? yeartax / 366m 
-                        : yeartax / 355m;
+                        : yeartax / 365m;
                     decimal endProportion =  DateTime.IsLeapYear(endDate.Year)
                         ? yeartax / 366m
-                        : yeartax / 355m;
+                        : yeartax / 365m;
                     // +1是因為考慮種樹問題，2021/01/01 ~ 2021/01/01 也算一天!!
                     int startYearDays = ((new DateTime(startDate.Year, 12, 31)) - startDate).Days +1;
-                    int endYearDays = (endDate-(new DateTime(startDate.Year, 1, 1))).Days +1;
-                    decimal crossYearsDaysTax = startYearDays * startProportion + Arr[1] * +endYearDays * endProportion;
+                    int endYearDays = (endDate-(new DateTime(endDate.Year, 1, 1))).Days +1;
+                    decimal crossYearsDaysTax = startYearDays * startProportion + Arr[1] *yeartax + endYearDays * endProportion;
                     crossYearsDaysTax = (startDate.Year == endDate.Year)
                         ? Math.Truncate((Arr[0] * startProportion))
                         : Math.Truncate(crossYearsDaysTax);
@@ -345,8 +346,8 @@ namespace _20210716_HW
                     else {
                         //起始日期當年天數*比例 + 中間經過幾年*年稅 + 結束日期當年天數*比例 = 應付稅額
                         temp = $"{startYearDays} 天 * {startProportion}(元/每日) + " +
-                            $"{Arr[1]} 年 * {yeartax}" +
-                            $"{endYearDays} 天 * {endProportion}(元/每日) + " +
+                            $"{Arr[1]} 年 * {yeartax} 元 + "  +
+                            $"{endYearDays} 天 * {endProportion}(元/每日) " +
                             $" = {crossYearsDaysTax}"
                             ;
                     }
@@ -355,7 +356,7 @@ namespace _20210716_HW
                         + $"CC數/馬力 : {CCComboBox.SelectedItem.ToString()}" + Environment.NewLine
                         + $"期間: {this.startDateTimePicker.Value.ToString("yyyy/MM/dd")} ~  {this.endDateTimePicker.Value.ToString("yyyy/MM/dd")}" + Environment.NewLine
                         + $"總天數 : 共{Arr[0]}天，經過完整{Arr[1]}年"+Environment.NewLine
-                        + $"金額計算 : {temp}" + Environment.NewLine
+                        + $"金額計算 : {temp} NT$" + Environment.NewLine
                         + $"應繳牌照稅總額 : {crossYearsDaysTax} NT$";
                 }
                 //錯誤警示:依期間模式未選取開始時間
