@@ -31,23 +31,23 @@ namespace _20210716_HW
         {
             this.yearModeRadioButton = new System.Windows.Forms.RadioButton();
             this.daysModeRadioButton2 = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.alertLabel = new System.Windows.Forms.Label();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.optionPanel = new System.Windows.Forms.Panel();
             this.carTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.outputTextBox = new System.Windows.Forms.TextBox();
             this.CCLabel = new System.Windows.Forms.Label();
             this.carTypeLabel = new System.Windows.Forms.Label();
+            this.CCComboBox = new System.Windows.Forms.ComboBox();
+            this.alertPanel = new System.Windows.Forms.Panel();
+            this.alertLabel = new System.Windows.Forms.Label();
+            this.titleLabel1 = new System.Windows.Forms.Label();
+            this.outputTextBox = new System.Windows.Forms.TextBox();
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.resetButton = new System.Windows.Forms.Button();
             this.comfirmButton = new System.Windows.Forms.Button();
-            this.CCComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.mainPanel.SuspendLayout();
+            this.optionPanel.SuspendLayout();
+            this.alertPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // yearModeRadioButton
@@ -78,33 +78,37 @@ namespace _20210716_HW
             this.daysModeRadioButton2.UseVisualStyleBackColor = true;
             this.daysModeRadioButton2.CheckedChanged += new System.EventHandler(this.daysModeRadioButton2_CheckedChanged);
             // 
-            // panel1
+            // mainPanel
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Info;
-            this.panel1.Controls.Add(this.panel3);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.outputTextBox);
-            this.panel1.Controls.Add(this.endDateTimePicker);
-            this.panel1.Controls.Add(this.startDateTimePicker);
-            this.panel1.Controls.Add(this.resetButton);
-            this.panel1.Controls.Add(this.comfirmButton);
-            this.panel1.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(553, 358);
-            this.panel1.TabIndex = 2;
+            this.mainPanel.BackColor = System.Drawing.SystemColors.Info;
+            this.mainPanel.Controls.Add(this.optionPanel);
+            this.mainPanel.Controls.Add(this.alertPanel);
+            this.mainPanel.Controls.Add(this.titleLabel1);
+            this.mainPanel.Controls.Add(this.outputTextBox);
+            this.mainPanel.Controls.Add(this.endDateTimePicker);
+            this.mainPanel.Controls.Add(this.startDateTimePicker);
+            this.mainPanel.Controls.Add(this.resetButton);
+            this.mainPanel.Controls.Add(this.comfirmButton);
+            this.mainPanel.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.mainPanel.Location = new System.Drawing.Point(12, 12);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(553, 358);
+            this.mainPanel.TabIndex = 2;
             // 
-            // alertLabel
+            // optionPanel
             // 
-            this.alertLabel.AutoSize = true;
-            this.alertLabel.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.alertLabel.ForeColor = System.Drawing.Color.Red;
-            this.alertLabel.Location = new System.Drawing.Point(15, 13);
-            this.alertLabel.Name = "alertLabel";
-            this.alertLabel.Size = new System.Drawing.Size(43, 16);
-            this.alertLabel.TabIndex = 9;
-            this.alertLabel.Text = "label3";
+            this.optionPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.optionPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.optionPanel.Controls.Add(this.carTypeComboBox);
+            this.optionPanel.Controls.Add(this.CCLabel);
+            this.optionPanel.Controls.Add(this.carTypeLabel);
+            this.optionPanel.Controls.Add(this.CCComboBox);
+            this.optionPanel.Controls.Add(this.daysModeRadioButton2);
+            this.optionPanel.Controls.Add(this.yearModeRadioButton);
+            this.optionPanel.Location = new System.Drawing.Point(3, 71);
+            this.optionPanel.Name = "optionPanel";
+            this.optionPanel.Size = new System.Drawing.Size(315, 157);
+            this.optionPanel.TabIndex = 15;
             // 
             // carTypeComboBox
             // 
@@ -130,19 +134,6 @@ namespace _20210716_HW
             this.carTypeComboBox.TabIndex = 12;
             this.carTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.carTypeComboBox_SelectedIndexChanged);
             // 
-            // outputTextBox
-            // 
-            this.outputTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.outputTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.outputTextBox.CausesValidation = false;
-            this.outputTextBox.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.outputTextBox.Location = new System.Drawing.Point(3, 263);
-            this.outputTextBox.Multiline = true;
-            this.outputTextBox.Name = "outputTextBox";
-            this.outputTextBox.ReadOnly = true;
-            this.outputTextBox.Size = new System.Drawing.Size(547, 73);
-            this.outputTextBox.TabIndex = 11;
-            // 
             // CCLabel
             // 
             this.CCLabel.AutoSize = true;
@@ -162,6 +153,76 @@ namespace _20210716_HW
             this.carTypeLabel.Size = new System.Drawing.Size(32, 16);
             this.carTypeLabel.TabIndex = 7;
             this.carTypeLabel.Text = "車種";
+            // 
+            // CCComboBox
+            // 
+            this.CCComboBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CCComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CCComboBox.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.CCComboBox.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.CCComboBox.FormattingEnabled = true;
+            this.CCComboBox.Items.AddRange(new object[] {
+            "<500cc",
+            "501cc - 600cc",
+            "601cc - 1200cc",
+            "1201cc - 1800cc",
+            "1801cc - 2400cc",
+            "2401cc - 3000cc",
+            "3001cc - 4200cc",
+            "4201cc - 5400cc",
+            "5401cc - 6600cc",
+            "6601cc - 7800cc",
+            "7801cc "});
+            this.CCComboBox.Location = new System.Drawing.Point(89, 110);
+            this.CCComboBox.Name = "CCComboBox";
+            this.CCComboBox.Size = new System.Drawing.Size(201, 24);
+            this.CCComboBox.TabIndex = 2;
+            this.CCComboBox.SelectedIndexChanged += new System.EventHandler(this.CCComboBox_SelectedIndexChanged);
+            // 
+            // alertPanel
+            // 
+            this.alertPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.alertPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.alertPanel.Controls.Add(this.alertLabel);
+            this.alertPanel.Location = new System.Drawing.Point(324, 95);
+            this.alertPanel.Name = "alertPanel";
+            this.alertPanel.Size = new System.Drawing.Size(226, 133);
+            this.alertPanel.TabIndex = 14;
+            // 
+            // alertLabel
+            // 
+            this.alertLabel.AutoSize = true;
+            this.alertLabel.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.alertLabel.ForeColor = System.Drawing.Color.Red;
+            this.alertLabel.Location = new System.Drawing.Point(15, 13);
+            this.alertLabel.Name = "alertLabel";
+            this.alertLabel.Size = new System.Drawing.Size(43, 16);
+            this.alertLabel.TabIndex = 9;
+            this.alertLabel.Text = "label3";
+            // 
+            // titleLabel1
+            // 
+            this.titleLabel1.AutoSize = true;
+            this.titleLabel1.BackColor = System.Drawing.Color.Beige;
+            this.titleLabel1.Font = new System.Drawing.Font("微軟正黑體", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.titleLabel1.Location = new System.Drawing.Point(21, 10);
+            this.titleLabel1.Name = "titleLabel1";
+            this.titleLabel1.Size = new System.Drawing.Size(222, 50);
+            this.titleLabel1.TabIndex = 13;
+            this.titleLabel1.Text = "牌照稅試算";
+            // 
+            // outputTextBox
+            // 
+            this.outputTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.outputTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.outputTextBox.CausesValidation = false;
+            this.outputTextBox.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.outputTextBox.Location = new System.Drawing.Point(3, 263);
+            this.outputTextBox.Multiline = true;
+            this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.ReadOnly = true;
+            this.outputTextBox.Size = new System.Drawing.Size(547, 92);
+            this.outputTextBox.TabIndex = 11;
             // 
             // endDateTimePicker
             // 
@@ -201,83 +262,23 @@ namespace _20210716_HW
             this.comfirmButton.UseVisualStyleBackColor = true;
             this.comfirmButton.Click += new System.EventHandler(this.comfirmButton_Click);
             // 
-            // CCComboBox
-            // 
-            this.CCComboBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CCComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CCComboBox.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.CCComboBox.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.CCComboBox.FormattingEnabled = true;
-            this.CCComboBox.Items.AddRange(new object[] {
-            "<500cc",
-            "501cc - 600cc",
-            "601cc - 1200cc",
-            "1201cc - 1800cc",
-            "1801cc - 2400cc",
-            "2401cc - 3000cc",
-            "3001cc - 4200cc",
-            "4201cc - 5400cc",
-            "5401cc - 6600cc",
-            "6601cc - 7800cc",
-            "7801cc "});
-            this.CCComboBox.Location = new System.Drawing.Point(89, 110);
-            this.CCComboBox.Name = "CCComboBox";
-            this.CCComboBox.Size = new System.Drawing.Size(201, 24);
-            this.CCComboBox.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Beige;
-            this.label1.Font = new System.Drawing.Font("微軟正黑體", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label1.Location = new System.Drawing.Point(21, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(222, 50);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "牌照稅試算";
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.alertLabel);
-            this.panel2.Location = new System.Drawing.Point(324, 95);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(226, 133);
-            this.panel2.TabIndex = 14;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.SystemColors.Window;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.carTypeComboBox);
-            this.panel3.Controls.Add(this.CCLabel);
-            this.panel3.Controls.Add(this.carTypeLabel);
-            this.panel3.Controls.Add(this.CCComboBox);
-            this.panel3.Controls.Add(this.daysModeRadioButton2);
-            this.panel3.Controls.Add(this.yearModeRadioButton);
-            this.panel3.Location = new System.Drawing.Point(3, 71);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(315, 157);
-            this.panel3.TabIndex = 15;
-            // 
             // TaxCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(584, 381);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.mainPanel);
             this.Name = "TaxCalculator";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "TaxCalculator";
             this.Load += new System.EventHandler(this.TaxCalculatorForm_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.mainPanel.ResumeLayout(false);
+            this.mainPanel.PerformLayout();
+            this.optionPanel.ResumeLayout(false);
+            this.optionPanel.PerformLayout();
+            this.alertPanel.ResumeLayout(false);
+            this.alertPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -286,7 +287,7 @@ namespace _20210716_HW
 
         private System.Windows.Forms.RadioButton yearModeRadioButton;
         private System.Windows.Forms.RadioButton daysModeRadioButton2;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Label alertLabel;
         private System.Windows.Forms.Label CCLabel;
         private System.Windows.Forms.Label carTypeLabel;
@@ -297,9 +298,9 @@ namespace _20210716_HW
         private System.Windows.Forms.TextBox outputTextBox;
         private System.Windows.Forms.ComboBox CCComboBox;
         private System.Windows.Forms.ComboBox carTypeComboBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label titleLabel1;
+        private System.Windows.Forms.Panel optionPanel;
+        private System.Windows.Forms.Panel alertPanel;
     }
 }
 

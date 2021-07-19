@@ -174,8 +174,8 @@ namespace _20210716_HW
         ///<summary>將各個控制項初始化</summary>///
         private void Init()
         {
-            this.carTypeComboBox.SelectedItem = "自用小客車";
-            this.CCComboBox.SelectedIndex = 0;
+            this.carTypeComboBox.SelectedItem = null;
+            this.CCComboBox.SelectedItem = null;
             this.alertLabel.Visible = false;
             if (!this.daysModeRadioButton2.Checked)
             {
@@ -189,6 +189,7 @@ namespace _20210716_HW
         /// <summary> 輸入車種傳回對應Hashtable </summary>
         private Hashtable GetCarCCHashTable(object obj) 
         {
+            
             switch (obj.ToString())
             {
                 case "自用小客車":
@@ -218,21 +219,28 @@ namespace _20210716_HW
         }
         private void carTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.outputTextBox.Text = string.Empty;
             this.CCComboBox.Items.Clear();
             string a = this.CCComboBox.SelectedItem as string;
-            List<string> list = new List<string>();
-            foreach (string key in GetCarCCHashTable(this.carTypeComboBox.SelectedItem.ToString()).Keys) 
+            if (this.carTypeComboBox.SelectedItem != null)
             {
-                list.Add(key);
+                List<string> list = new List<string>();
+                foreach (string key in GetCarCCHashTable(this.carTypeComboBox.SelectedItem.ToString()).Keys)
+                {
+                    list.Add(key);
+                }
+                list.Sort();
+                foreach (string temp in list)
+                {
+                    this.CCComboBox.Items.Add(temp);
+                }
+                this.CCComboBox.SelectedIndex = 0;
             }
-            list.Sort();
-            foreach(string temp in list)
-            {
-                this.CCComboBox.Items.Add(temp);
-            }
-            this.CCComboBox.SelectedIndex = 0;
         }
-
+        private void CCComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.outputTextBox.Text = string.Empty;
+        }
         private void comfirmButton_Click(object sender, EventArgs e)
         {
             ShowResultText();
@@ -257,7 +265,7 @@ namespace _20210716_HW
             object tax = temp[this.CCComboBox.SelectedItem.ToString()];
             //曳引車牌照稅依貨車加收30%
             if (obj.ToString() == "曳引車")
-                return (Convert.ToDecimal(tax)*1.3m);
+                return (Math.Truncate(Convert.ToDecimal(tax)*1.3m));
             else
                 return (Convert.ToDecimal(tax));
         }
@@ -321,44 +329,76 @@ namespace _20210716_HW
                 return new int[2] { days, years };
             }
         }
+        /// <summary>顯示輸出結果與使用者錯誤提示 </summary>
         private void ShowResultText()
         {
-            decimal yeartax = GetYearTax();
-            if (this.yearModeRadioButton.Checked)
-            {
-                this.alertLabel.Visible = false;
-                this.outputTextBox.Text = yeartax.ToString();
-            } 
-            else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
-            {
-                this.alertLabel.Visible = false ;
-                this.outputTextBox.Text = GetDaysTax(yeartax).ToString();
-            }
-            //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
-            else if (this.daysModeRadioButton2.Checked && (!this.startDateTimePicker.Checked ))
+            //
+            if (this.carTypeComboBox.SelectedItem == null)
             {
                 this.outputTextBox.Text = "發生錯誤";
                 this.alertLabel.Visible = true;
-                this.alertLabel.Text = "請點選起始日期並重新送出!!";
+                this.alertLabel.Text = "請選擇車種並重新送出!!";
             }
-            else if (this.daysModeRadioButton2.Checked && (!this.endDateTimePicker.Checked))
+            else if (this.CCComboBox.SelectedItem == null)
             {
                 this.outputTextBox.Text = "發生錯誤";
                 this.alertLabel.Visible = true;
-                this.alertLabel.Text = "請點選結束日期並重新送出!!";
-            }
-            else if(GetDuration()[0] == 0)
-            {
-                this.outputTextBox.Text = "發生錯誤";
-                this.alertLabel.Visible = true;
-                this.alertLabel.Text = "起始日期大於結束日期!!\n請選擇正確的起始日期與結束日期，\n並重新送出!!";
+                this.alertLabel.Text = "請選擇車種CC數/馬力並重新送出!!";
             }
             else
             {
-                this.outputTextBox.Text = "發生錯誤";
-                this.alertLabel.Visible = true;
-                this.alertLabel.Text = "發生未知錯誤，請聯繫相關人員!!";
+                decimal yeartax = GetYearTax();
+                //全年度模式輸出文字
+                if (this.yearModeRadioButton.Checked)
+                {
+                    this.alertLabel.Visible = false;
+                    this.outputTextBox.Text =
+                        $"車種 : {this.carTypeComboBox.SelectedItem.ToString()}" + Environment.NewLine
+                        + $"CC數/馬力 : {CCComboBox.SelectedItem.ToString()}" + Environment.NewLine
+                        + $"年應繳牌照稅額 : {yeartax.ToString()} NT$";
+                }
+                //依期間模式輸出文字
+                else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
+                {
+                    this.alertLabel.Visible = false;
+                    this.outputTextBox.Text =
+                        $"車種 : {this.carTypeComboBox.SelectedItem.ToString()}" + Environment.NewLine
+                        + $"CC數/馬力 : {CCComboBox.SelectedItem.ToString()}" + Environment.NewLine
+                        + $"期間:  " + Environment.NewLine
+                        + $"計算金額 :" + Environment.NewLine
+                        + $"應繳牌照稅總額 : {GetDaysTax(yeartax).ToString()} NT$";
+                }
+                //錯誤警示:依期間模式未選取開始時間
+                else if (this.daysModeRadioButton2.Checked && (!this.startDateTimePicker.Checked))
+                {
+                    this.outputTextBox.Text = "發生錯誤";
+                    this.alertLabel.Visible = true;
+                    this.alertLabel.Text = "請點選起始日期並重新送出!!";
+                }
+                //錯誤警示:依期間模式未選取結束時間
+                else if (this.daysModeRadioButton2.Checked && (!this.endDateTimePicker.Checked))
+                {
+                    this.outputTextBox.Text = "發生錯誤";
+                    this.alertLabel.Visible = true;
+                    this.alertLabel.Text = "請點選結束日期並重新送出!!";
+                }
+                //錯誤警示:如果GetDuration()[0] == 0，代表結束時間小於開始時間
+                else if (GetDuration()[0] == 0)
+                {
+                    this.outputTextBox.Text = "發生錯誤";
+                    this.alertLabel.Visible = true;
+                    this.alertLabel.Text = "起始日期大於結束日期!!\n請選擇正確的起始日期與結束日期，\n並重新送出!!";
+                }
+                //錯誤警示:未知異常發生
+                else
+                {
+                    this.outputTextBox.Text = "發生錯誤";
+                    this.alertLabel.Visible = true;
+                    this.alertLabel.Text = "發生未知錯誤，請聯繫相關人員!!";
+                }
             }
         }
+
+
     }
 }
