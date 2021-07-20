@@ -50,12 +50,12 @@ namespace _20210716_HW
             {"09. 4801cc~5400cc",   8100},
             {"10. 5401cc~6000cc",   9000},
             {"11. 6001cc~6600cc",   9900},
-            {"12. 6601cc~7200cc",   1080},
-            {"13. 7201cc~7800cc",   1170},
-            {"14. 7801cc~8400cc",   1260},
-            {"15. 8401cc~9000cc",   1350},
-            {"16. 9001cc~9600cc",   1440},
-            {"17. 9601cc~10200cc",  1530},
+            {"12. 6601cc~7200cc",   10800},
+            {"13. 7201cc~7800cc",   11700},
+            {"14. 7801cc~8400cc",   12600},
+            {"15. 8401cc~9000cc",   13500},
+            {"16. 9001cc~9600cc",   14400},
+            {"17. 9601cc~10200cc",  15300},
             {"18. >10201cc",  16200     },
         };
         /// <summary> 貨車各個CC數區間對應牌照稅的Hashtable  </summary>
@@ -320,7 +320,7 @@ namespace _20210716_HW
                 else if (this.daysModeRadioButton2.Checked && this.startDateTimePicker.Checked && this.endDateTimePicker.Checked && GetDuration()[0] != 0)
                 {
                     this.alertLabel.Visible = false;
-                    //注意!! 若直接取this.startDateTimePicker.Value其實會包含時分秒，造成兩個DateTime 之間的Days屬性產生誤差
+                    //注意!! 若直接取this.startDateTimePicker.Value其實會包含時分秒，造成兩個DateTime 之間的Days屬性產生誤差!!
                     DateTime startDate = (this.startDateTimePicker.Value).Date;
                     DateTime endDate = (this.endDateTimePicker.Value).Date;
                     int[] Arr = GetDuration();
